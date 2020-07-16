@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
-import { PaginateContainer, HeroCard } from './styled'
+import { HeroContainer, HeroBox, HeroCard, ButtonsBox, Button } from './styled';
 
 import ApiServices from '../../Services/api'
 import { verifyApiKey } from '../../Utils/secure'
@@ -42,16 +42,18 @@ const Paginate: FC = () => {
     }, [minIndex, maxIndex])
 
     return (
-        <React.Fragment>
-            <HeroCard>
-                {heros?.map((e: any, i: number) => (
-                    <div key={i}>
-                        <img src={`${e.thumbnail.path}.jpg`} alt={e.name} />
-                    </div>
+        <HeroContainer>
+            <HeroBox>
+                {heros?.map((char: any, i: number) => (
+                    <HeroCard className="herocard" key={char.id}>
+                        <img src={`${char.thumbnail.path}.${char.thumbnail.extension}`} alt="" />
+                        <strong>{char.name}</strong>
+                        <div className="canto-chanfrado"></div>
+                    </HeroCard>
                 ))}
-            </HeroCard>
-            <PaginateContainer>
-                <div
+            </HeroBox>
+            <ButtonsBox className="actions">
+                <Button
                     className="paginate-button paginate-back"
                     onClick={() => {
                         if (minIndex > 0) {
@@ -62,11 +64,11 @@ const Paginate: FC = () => {
                     }}
                 >
                     {'< Back'}
-                </div>
-                <div className="page-counter">
+                </Button>
+                <Button style={{ background: 'green' }} className="page-counter">
                     {pageCount + 1} / {lastIndex / offset}
-                </div>
-                <div
+                </Button>
+                <Button
                     className="paginate-button paginate-next"
                     onClick={() => {
                         if (maxIndex < lastIndex) {
@@ -77,10 +79,10 @@ const Paginate: FC = () => {
                     }}
                 >
                     {'Next >'}
-                </div>
+                </Button>
 
-            </PaginateContainer>
-        </React.Fragment>
+            </ButtonsBox>
+        </HeroContainer>
     )
 }
 
