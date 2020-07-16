@@ -10,7 +10,7 @@ const api = axios.create({
 const limit = 5
 
 const ApiServices = {
-    allHeros: async (offset: number, searchHero = null, simulateError = false) => {
+    allHeros: async (offset: number, searchHero = '', simulateError = false) => {
         const { ts, apiKey, privateKey } = marvelCredenditals
 
         const hash = simulateError ? 'TesteError' : md5(ts + privateKey + apiKey)

@@ -1,11 +1,15 @@
 import React, { FC } from 'react'
 import { PaginateContainer } from './styled'
 
-import allHeors from '../../Services/api'
+import ApiServices from '../../Services/api'
+import { verifyApiKey } from '../../Utils/secure'
 
 const Paginate: FC = () => {
 
-    console.log(allHeors)
+    if (verifyApiKey()) {
+
+        console.log(ApiServices.allHeros(5, 'thor'))
+    }
     return (
         <PaginateContainer>
             <h1>{' < Privious XX/ XXX  Next > '}</h1>
