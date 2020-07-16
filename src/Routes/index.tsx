@@ -1,6 +1,7 @@
 import React, { FC, Fragment } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Home } from '../Pages'
+import Paginate from '../Utils/pagination'
 
 const Routes: FC = () => {
     return (
@@ -10,6 +11,7 @@ const Routes: FC = () => {
                     <Route path="/" component={Home} exact />
                 </Switch>
             </Router>
+            <Paginate />
         </Fragment>
     )
 }
