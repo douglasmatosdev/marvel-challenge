@@ -9,7 +9,7 @@ const Paginate: FC = () => {
     const limit = 5
     const [lastIndex, setLastIndex] = useState(0)
     const [heros, setHeros]: any[] = useState([])
-    const [maxIndex, setMaxIndex] = useState(0)
+    const [maxIndex, setMaxIndex] = useState(offset)
     const [minIndex, setMinIndex] = useState(0)
     const [pageCount, setPageCount] = useState(0)
     const [paginateInfo, setPaginationInfo] = useState({})
@@ -21,27 +21,30 @@ const Paginate: FC = () => {
                 .then(res => {
                     const data = res.data.data
                     setLastIndex(data.total)
-                    setHeros(data.results)
-                    setPaginationInfo({
-                        ...paginateInfo,
-                        offset: data.offset,
-                        limit: data.limit,
-                        total: data.total,
-                        count: data.count
-                    })
+                    // const results = [ ...heros, ...data.results]
+                    setHeros([ ...heros, ...data.results])
+                    // setPaginationInfo({
+                    //     ...paginateInfo,
+                    //     offset: data.offset,
+                    //     limit: data.limit,
+                    //     total: data.total,
+                    //     count: data.count
+                    // })
                     setLoading(false)
                 })
         }
     }
-    useEffect(() => setPagination(0), [])
+    useEffect(() => {
+        setPagination(0)
+    }, [])
 
     useEffect(() => {
+        console.log(heros.length)
+        console.log(heros)
         if (maxIndex === heros?.length) {
             setPagination(maxIndex)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [minIndex, maxIndex])
-    console.log(paginateInfo)
+    }, [minIndex, maxIndex, heros])
     return (
         <HeroContainer>
             {!loading ? (
