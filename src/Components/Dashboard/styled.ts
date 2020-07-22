@@ -3,19 +3,44 @@ import styled from 'styled-components'
 
 export const DashboardContainer = styled.div`
     background: #fff;
-    padding: 40px;
+    padding: 20px;
     flex: 1;
 
     .heros-container {
-        padding: 20px;
-        background: #fff;
-        border-radius: 45px;
+        background-color: #fff;
+        border-radius: 5px;
+        display: flex;
         flex-direction: column;
         flex: 1;
-        align-items: center;
-        box-shadow: 0px 0px 8px #0005;
-
         
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
+        
+        .heros-list {
+            width: 60%;
+            display: flex;
+            flex-wrap: wrap;
+            align-self: center;
+            flex: 1;
+            .hero-box {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 5px;
+            }
+            .hero-box::after {
+                content: '';
+                display: block;
+                position: absolute;
+                width: 15px;
+                height: 30px;
+                background: #fff;
+                z-index: 5;
+                bottom: -5px;
+                right: 3px;
+                transform: rotate(45deg);
+            }
+        }
 
         .pagination-container {
             display: flex;
@@ -29,7 +54,7 @@ export const DashboardContainer = styled.div`
                 cursor: pointer;
             }
 
-            .page-count {
+            .page-counter {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -45,35 +70,4 @@ export const DashboardContainer = styled.div`
             }
         }
     }
-`
-
-export const Characters = styled.div`
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border-radius: 10px;
-    cursor: pointer;
-
-    img {
-        min-width: 96px;
-        min-height: 96px;
-    }
-
-    &:hover,
-    &:active,
-    &:focus {
-        background-color: rgba(0, 0, 0, 0.15);
-        .poke-icon-id {
-            color: #353f47;
-        }
-    }
-
-    .hero-name {
-        text-transform: capitalize;
-        font-weight: 500;
-        color: #353f47;
-    }
-    
 `

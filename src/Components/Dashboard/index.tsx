@@ -1,13 +1,14 @@
 import React, { FC, useState, useEffect, useCallback } from 'react'
-import { DashboardContainer,  Characters} from './styled';
+import { DashboardContainer } from './styled';
 
 import ApiServices from '../../Services/api'
 import { verifyApiKey } from '../../Utils/secure'
+import HeroCard from '../HeroCard';
 
 const Dashboard: FC = () => {
 
-    const limit = 4
-    const [lastIndex, setLastIndex] = useState(0)
+    const limit = 10
+    const [lastIndex, setLastIndex] = useState(4)
     const [heros, setHeros]: any[] = useState([])
     const [maxIndex, setMaxIndex] = useState(limit)
     const [minIndex, setMinIndex] = useState(0)
@@ -43,10 +44,12 @@ const Dashboard: FC = () => {
                         {heros?.map((char: any, i: number) => {
                             if (i >= minIndex && i < maxIndex) {
                                 return (
-                                    <Characters key={char.id}>
-                                        <img src={`${char.thumbnail.path}.${char.thumbnail.extension}`} alt={char.name} />
-                                        <strong className="hero-name">{char.name}</strong>
-                                    </Characters>
+                                    <div className="hero-box" key={char.id}>
+                                        <HeroCard
+                                            url={`${char.thumbnail.path}.${char.thumbnail.extension}`}
+                                            name={char.name}
+                                        />
+                                    </div>
                                 )
                             }
                         }

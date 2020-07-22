@@ -12,6 +12,9 @@ const hash = md5(ts + privateKey + apiKey)
 const ApiServices = {
     allHeros: async (offset: number, limit: number, searchHero: null | string, simulateError=false) => {
        return await api.get(`/characters?${searchHero ? `nameStartsWith=${searchHero}&` : ''}limit=${limit}&offset=${offset}&ts=${ts}&apikey=${apiKey}&hash=${hash}`)
+    },
+    searchHeros: async (name: string) => {
+        return await api.get(`https://terrigen-cdn-dev.marvel.com/content/prod/1x/${name}`)
     }
 }
 
