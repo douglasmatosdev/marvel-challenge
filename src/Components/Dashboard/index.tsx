@@ -1,9 +1,11 @@
-import React, { FC, useState, useEffect, useCallback } from 'react'
+import React, { FC, Fragment, useState, useEffect, useCallback } from 'react'
 import { DashboardContainer } from './styled';
 
 import ApiServices from '../../Services/api'
 import { verifyApiKey } from '../../Utils/secure'
 import HeroCard from '../HeroCard';
+
+import SeachHeroContainer from '../Search'
 
 const Dashboard: FC = () => {
 
@@ -39,53 +41,57 @@ const Dashboard: FC = () => {
     return (
         <DashboardContainer>
             {!loading ? (
-                <div className="heros-container">
-                    <div className="heros-list">
-                        {heros?.map((char: any, i: number) => {
-                            if (i >= minIndex && i < maxIndex) {
-                                return (
-                                    <div className="hero-box" key={char.id}>
-                                        <HeroCard
-                                            url={`${char.thumbnail.path}.${char.thumbnail.extension}`}
-                                            name={char.name}
-                                        />
-                                    </div>
-                                )
-                            }
-                        }
-                        )}
-                    </div>
-                    <div className="pagination-container">
-                        <div
-                            className="pagination-button pagination-back"
-                            onClick={() => {
-                                if (minIndex > 0) {
-                                    setMaxIndex(minIndex)
-                                    setMinIndex(minIndex - limit)
-                                    setPageCount(pageCount - 1)
-                                }
-                            }}
-                        >
-                            {'< Back'}
-                        </div>
-                        <div className="page-counter">
-                            {pageCount + 1} / {Math.floor(lastIndex / limit)}
-                        </div>
-                        <div
-                            className="pagination-button pagination-next"
-                            onClick={() => {
-                                if (maxIndex < lastIndex) {
-                                    setMinIndex(maxIndex)
-                                    setMaxIndex(maxIndex + limit)
-                                    setPageCount(pageCount + 1)
-                                }
-                            }}
-                        >
-                            {'Next >'}
-                        </div>
+                <Fragment>
+                    <SeachHeroContainer />
 
+                    <div className="heros-container">
+                        <div className="heros-list">
+                            {heros?.map((char: any, i: number) => {
+                                if (i >= minIndex && i < maxIndex) {
+                                    return (
+                                        <div className="hero-box" key={char.id}>
+                                            <HeroCard
+                                                url={`${char.thumbnail.path}.${char.thumbnail.extension}`}
+                                                name={char.name}
+                                            />
+                                        </div>
+                                    )
+                                }
+                            }
+                            )}
+                        </div>
+                        <div className="pagination-container">
+                            <div
+                                className="pagination-button pagination-back"
+                                onClick={() => {
+                                    if (minIndex > 0) {
+                                        setMaxIndex(minIndex)
+                                        setMinIndex(minIndex - limit)
+                                        setPageCount(pageCount - 1)
+                                    }
+                                }}
+                            >
+                                {'< Back'}
+                            </div>
+                            <div className="page-counter">
+                                {pageCount + 1} / {Math.floor(lastIndex / limit)}
+                            </div>
+                            <div
+                                className="pagination-button pagination-next"
+                                onClick={() => {
+                                    if (maxIndex < lastIndex) {
+                                        setMinIndex(maxIndex)
+                                        setMaxIndex(maxIndex + limit)
+                                        setPageCount(pageCount + 1)
+                                    }
+                                }}
+                            >
+                                {'Next >'}
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                </Fragment>
             ) : (
                     <h1>Carregando...</h1>
                 )}

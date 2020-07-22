@@ -14,7 +14,7 @@ const ApiServices = {
        return await api.get(`/characters?${searchHero ? `nameStartsWith=${searchHero}&` : ''}limit=${limit}&offset=${offset}&ts=${ts}&apikey=${apiKey}&hash=${hash}`)
     },
     searchHeros: async (name: string) => {
-        return await api.get(`https://terrigen-cdn-dev.marvel.com/content/prod/1x/${name}`)
+        return await api.get(`/characters?${name ? `nameStartsWith=${name}&` : ''}&ts=${ts}&apikey=${apiKey}&hash=${hash}`)
     }
 }
 
