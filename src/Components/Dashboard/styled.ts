@@ -5,8 +5,9 @@ export const DashboardContainer = styled.div`
     background: #fff;
     padding: 20px;
     flex: 1;
-
+    width: 100%;
     .heros-container {
+
         background-color: #fff;
         border-radius: 5px;
         display: flex;
@@ -16,8 +17,9 @@ export const DashboardContainer = styled.div`
         box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
         
         .heros-list {
-            width: 60%;
+            /* width: 60%;  */
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
             align-self: center;
             flex: 1;
@@ -67,6 +69,24 @@ export const DashboardContainer = styled.div`
         @media (max-width: 600px) {
             .heros-container {
                 padding: 10px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .heros-list {
+                width: 80%;
+            }
+        }
+
+        @media (min-width: 1080px) {
+            .heros-list {
+                width: 70%;
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .heros-list {
+                width: 90%;
             }
         }
     }

@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState, useEffect, useCallback } from 'react'
+import React, { FC, Fragment, useState, useEffect, useCallback, useRef } from 'react'
 import { DashboardContainer } from './styled';
 
 import ApiServices from '../../Services/api'
@@ -8,7 +8,6 @@ import HeroCard from '../HeroCard';
 import SeachHeroContainer from '../Search'
 
 const Dashboard: FC = () => {
-
     const limit = 10
     const [lastIndex, setLastIndex] = useState(4)
     const [heros, setHeros]: any[] = useState([])
@@ -16,6 +15,7 @@ const Dashboard: FC = () => {
     const [minIndex, setMinIndex] = useState(0)
     const [pageCount, setPageCount] = useState(0)
     const [loading, setLoading] = useState(false)
+    const herosRef = useRef(heros)
 
     const setPagination = useCallback((offset = 0) => {
         if (verifyApiKey()) {
@@ -23,7 +23,9 @@ const Dashboard: FC = () => {
                 .then(res => {
                     const data = res.data.data
                     setLastIndex(data.total)
-                    setHeros([...heros, ...data.results])
+                    let temp = [...heros, ...data.results]
+                    herosRef.current = temp
+                    setHeros(temp)
 
                     setLoading(false)
                 })
@@ -38,18 +40,32 @@ const Dashboard: FC = () => {
         }
     }, [minIndex, maxIndex, heros, setPagination])
 
+    const handleFilterHeros = useCallback((suggestions: Record<string, any>[]) => {
+        if (suggestions.length === 0) {
+            setHeros(herosRef.current)
+        } else {
+            setLastIndex(suggestions.length)
+            setHeros(suggestions)
+        }
+    }, [])
+
     return (
         <DashboardContainer>
             {!loading ? (
                 <Fragment>
-                    <SeachHeroContainer />
+                    <SeachHeroContainer
+                        handleFilterHeros={handleFilterHeros}
+                    />
 
                     <div className="heros-container">
                         <div className="heros-list">
                             {heros?.map((char: any, i: number) => {
                                 if (i >= minIndex && i < maxIndex) {
                                     return (
-                                        <div className="hero-box" key={char.id}>
+                                        <div
+                                            key={char.id}
+                                            className="hero-box"
+                                        >
                                             <HeroCard
                                                 url={`${char.thumbnail.path}.${char.thumbnail.extension}`}
                                                 name={char.name}
@@ -74,7 +90,7 @@ const Dashboard: FC = () => {
                                 {'< Back'}
                             </div>
                             <div className="page-counter">
-                                {pageCount + 1} / {Math.floor(lastIndex / limit)}
+                                {pageCount + 1} / {lastIndex}
                             </div>
                             <div
                                 className="pagination-button pagination-next"
@@ -93,8 +109,8 @@ const Dashboard: FC = () => {
                     </div>
                 </Fragment>
             ) : (
-                    <h1>Carregando...</h1>
-                )}
+                <h1>Carregando...</h1>
+            )}
         </DashboardContainer>
     )
 }

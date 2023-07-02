@@ -13,8 +13,12 @@ export const HeroCardContainer = styled.div`
     position: relative;
     overflow: hidden;
 
-    width: 170px;
     height: 300px;
+    width: 80%;
+
+    @media (min-width: 420px) {
+        width: 170px;
+    }
 
     img {
         min-width: 96px;

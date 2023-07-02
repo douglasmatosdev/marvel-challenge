@@ -7,7 +7,9 @@ export const SearchHeroContainer = styled.div`
     }
 
     display: flex;
+    flex-direction: column;
     margin: 20px 0;
+    position: relative;
 
     .icon-search {
         margin: 0;
@@ -25,8 +27,7 @@ export const SearchHeroContainer = styled.div`
     .input-name {
         position: relative;
         input {
-            min-width: 250px;
-            width: 350px;
+            width: 100%;
             height: 35px;
 
             padding: 2px 25px;
@@ -36,7 +37,9 @@ export const SearchHeroContainer = styled.div`
             
             outline: none;
 
-            font: 800 26px/1 RobotoCondensed,Trebuchet MS,Helvetica,Arial,sans-serif;
+            font-weight: 800;
+            font-size: 26px;
+            font-family: 'sans-serif';
             letter-spacing: 1px;
             text-transform: uppercase;
             
@@ -50,10 +53,30 @@ export const SearchHeroContainer = styled.div`
     }
 
     .response-names {
+        margin: 1.1rem 0 0 0;
+        padding: 1rem 2rem;
+        position: absolute;
+        top: 100%;
         min-width: 250px;
         width: 350px;
         z-index: 9;
-        height: 100%;
-        max-height: 400px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
+    
+        height: auto;
+        max-height: 200px;
+        overflow-y: auto;
+        background-color: white;
+
+        list-style: none;
+
+        li {
+            line-height: 24px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            &:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
     }
 `
